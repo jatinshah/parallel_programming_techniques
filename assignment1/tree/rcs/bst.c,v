@@ -1,0 +1,113 @@
+head	1.1;
+access;
+symbols;
+locks
+	jds58:1.1; strict;
+comment	@ * @;
+
+
+1.1
+date	2000.09.16.02.03.09;	author jds58;	state Exp;
+branches;
+next	;
+
+
+desc
+@First Version.
+Draft. Not Sure.
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@#include <stdio.h>
+#include <stdlib.h>
+#include <pthread.h>
+
+typedef struct tnode {
+    int value;
+    struct tnode *left, *right;
+    pthread_mutex_t m;
+} treeNode;
+
+typedef struct {
+    treeNode *root;
+    pthread_mutex_t m;
+} treeRoot;
+
+void insert(treeRoot *tree, int val)
+{
+    pthread_mutex_lock(&tree->m);
+    treeNode **tptr = &(tree->root);
+    if(*tptr == NULL){
+    	*tptr = (treeNode *)malloc(sizeof(treeNode));
+    	(*tptr)->value = val;
+    	(*tptr)->left = NULL;
+    	(*tptr)->right = NULL;    
+    	(*tptr)->m = PTHREAD_MUTEX_INITIALIZER;
+	pthread_mutex_unlock(&tree->m);
+	return;
+    }
+    pthread_mutex_lock(&(*tptr)->m);
+    pthread_mutex_unlock(&tree->m);
+    treeNode **parent;
+    do{
+
+	/* ignore duplicates */
+	if ((*tptr)->value == val)
+	    return;
+
+	/* follow the right or left branch */
+	if ((*tptr)->value < val){
+	    if((*tptr)->right != NULL){
+		    pthread_mutex_lock(&(*tptr)->right->m);
+		    pthread_mutex_unlock(&(*tptr)->m);
+	    }
+	    else
+		    parent = tptr;
+	    tptr = &((*tptr)->right);
+	}
+	else{
+	    if((*tptr)->left != NULL){
+		    pthread_mutex_lock(&(*tptr)->left->m);
+		    pthread_mutex_unlock(&(*tptr)->m);
+	    }
+	    else
+		    parent = tptr;
+	    tptr = &((*tptr)->left);
+	}
+    } while((*tptr) != NULL);
+    *tptr = (treeNode *)malloc(sizeof(treeNode));
+    (*tptr)->value = val;
+    (*tptr)->left = NULL;
+    (*tptr)->right = NULL;    
+    (*tptr)->m = PTHREAD_MUTEX_INITIALIZER;
+    pthread_mutex_unlock(&(*parent)->m);
+}
+
+void print(treeNode *t)
+{
+    if (t == NULL)
+	return;
+    print(t->left);
+    printf("Value: %d\n", t->value);
+    print(t->right);
+}
+
+main()
+{
+    int i;
+    treeRoot t;
+    
+    t.root = NULL;
+    for (i=0; i<10; i++) {
+	int v;
+	scanf("%d", &v);
+	insert(&t, v);
+	print(t.root);
+    }	
+}
+@

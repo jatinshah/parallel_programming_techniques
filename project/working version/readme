@@ -1,0 +1,34 @@
+1. The program has 3 source files :
+
+   (a) transloc.c (contains the main program and other functions to perform valid
+proper and bad translocations)
+
+   (b) minsp.c (contains the implementations for
+detecting minimum subpermutation,and performing translocations on minimum
+subpermutation)
+   
+(c) transloc.h (contains the data structure for genome, chromosome, gene and
+sub-gene)
+
+
+
+2. Type 'make' to compile to produce transloc executable.
+
+
+
+3. The program expects 2 input.
+
+These can be passed in from the command line as follows :
+
+transloc f1 f2 
+where f1 denotes the first file, and f2 denotes the second file.
+
+
+
+4. The first genome is represented in the first file, and the second genome is
+represented in the second genome.
+
+
+
+5. For each file, each row represents a chromosome, while each gene is
+represented by an integer, and is separated from its neighbour by a space.

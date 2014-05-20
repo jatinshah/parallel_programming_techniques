@@ -1,0 +1,88 @@
+head	1.3;
+access;
+symbols;
+locks
+	jds58:1.3; strict;
+comment	@ * @;
+
+
+1.3
+date	2000.09.15.18.46.15;	author jds58;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2000.09.13.20.54.02;	author jds58;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2000.09.13.18.55.47;	author jds58;	state Exp;
+branches;
+next	;
+
+
+desc
+@First Draft
+Not Working
+@
+
+
+1.3
+log
+@Working..Single Barrier
+@
+text
+@#include <stdio.h>
+#include <pthread.h>
+#include <errno.h>
+#include <time.h>
+#include <stdlib.h>
+#define NUMTHRS 10
+#define MAXTIME 10
+#define MAXBARRIERS 10
+
+
+typedef struct{
+	pthread_cond_t *c;
+	pthread_mutex_t *m;
+	int nthreads;
+} barrier_t;
+
+typedef struct{
+	int id;		// Process ID
+	barrier_t *b;	
+} proc_info_t;
+
+void barrier_init(barrier_t *, int);
+void barrier(barrier_t *);
+void barrier_destroy(barrier_t *);
+void *process_init(void *);
+@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@d4 1
+a5 1
+#include <unistd.h>
+d7 2
+a8 1
+#define MAXTIME 10000L
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d7 1
+d11 2
+a12 2
+	pthread_cond_t c;
+	pthread_mutex_t m;
+@

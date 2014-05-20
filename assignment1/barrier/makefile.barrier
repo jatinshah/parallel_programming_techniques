@@ -1,0 +1,6 @@
+barrier : main.o barrier.o
+		gcc main.o barrier.o -o barrier -lpthread
+barrier.o : barrier.C main.h
+		gcc -c barrier.C
+main.o : main.C main.h
+		gcc -c main.C

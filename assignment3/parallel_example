@@ -1,0 +1,25 @@
+Example: Parallel Programming can be used in simulation experiments where a 
+particular system/sub-system of the universe is studied. In these cases, the
+part of universe under study is described using some set of mathematical 
+equations and laws. In general these equations could involve several hundreds 
+of variables and differentials of varying orders. In most cases it is required 
+to simluate the system, given some initial state. By simulation it is meant that
+the values of the various parameters of the system are desired as a function of
+of time or some other varying parameter(s). 
+
+Use of Parallelism:
+	In most cases the system has several hundreds of variables and 
+parameters. However, it is possible to identify sets of variables which are
+independent of each other. The equations which involve these sets can solved
+in parallel. If it is possible to identify stages in computation which are 
+independent then it is also possible to solve those stages in parallel. 
+
+Success/Weakness/Challenges:
+	The advantages are obvious in that due to parallelism the computation 
+speed can be improved substantially. The weakness and the main challenge is 
+identification of parallelism. In cases where the system is very huge, the 
+number of variable/parameters/equations could be in the order of thousands. So
+it might not be possible or feasible to decompose the system in to parallel 
+components. Moreover, the cost of decomposition should not exceed the cost
+of simulating the system on sequential machine. The algorithms should also be
+scalable in cases of some simulation enviroments.

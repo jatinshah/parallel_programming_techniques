@@ -1,0 +1,17 @@
+			Memory Hierarchy of a Zoo Machine
+	
+1. For array sizes upto 16KB, the access time is very low for all strides. Thus,
+the first-level on-chip cache is 16KB.	
+2. As the array sizes and stride increases, the access time increases. When the
+stride is 32 bytes, we see an inflection point which indicates cache-line
+size of 32 bytes.
+3. The access time of array locations drops to the cache-time when size is 
+one-fourth the array size. Thuse, we can conclude that the array is four-way
+set associative.
+4. As array size continues to rise, the memory access time increases. In 
+particular for array sizes more than 512K, the access time is more than the 
+smaller arrays. This suggests a secondary cache size of 512K which coincides 
+with the specification.
+5. The inflection point at 4K for array sizes more than 256KB denotes the page 
+size of Pentium II Processor. The curves drop from there on due to the 4-way
+associativity of the array.
